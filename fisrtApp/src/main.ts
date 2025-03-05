@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import path from 'node:path';
+import fs from "fs"
 import started from 'electron-squirrel-startup';
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -9,7 +10,23 @@ if (started) {
 let mainWindow: BrowserWindow
 
 const createWindow = () => {
-
+  const configPath = path.resolve(__dirname, "..", "..", "..", "fisrtConfig.json")
+  let config: {
+    height: number,
+    width: number,
+    resizable: boolean,
+    fullscreen: boolean,
+    title: string,
+    x: number
+    y: number,
+    backgroundColor: string
+  };
+  try {
+    const rawData = fs.readFileSync(configPath)
+    config = JSON.parse(rawData)
+  } catch (error) {
+    console.log("🚀 ~ createWindow ~ error:", error)
+  }
   const { height, width } = screen.getPrimaryDisplay().workAreaSize
   const secWinHight = Math.floor(height / 3)
   const mainWinHight = Math.floor(height / 3) * 2
@@ -18,19 +35,21 @@ const createWindow = () => {
   const yPosMain = 0
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: mainWinHight-8,
-    x: xPos+4,
-    alwaysOnTop:true,
-    title:"POS1",
-    y: yPosMain+4,
-    width:width-8,
+    height: config.height,
+    x: config.x,
+    title: config.title,
+    y: config.y,
+    width: config.width,
+    resizable: config.resizable,
+    fullscreen: config.fullscreen,
+    backgroundColor: config.backgroundColor,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
     },
-    
+
   });
-  
+
   mainWindow.loadFile("./mainWindow.html")
 
   // and load the index.html of the app.
@@ -73,6 +92,6 @@ ipcMain.on("change-bgcolor-main", (_e, color) => {
 
 ipcMain.on("change-size-main", (_e, size) => {
   if (mainWindow) {
-    mainWindow.setSize(mainWindow.getSize()[0],size)
+    mainWindow.setSize(mainWindow.getSize()[0], size)
   }
 })

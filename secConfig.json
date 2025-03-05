@@ -1,0 +1,10 @@
+{
+    "height":600,
+    "width":800,
+    "resizable":true,
+    "fullscreen":false,
+    "title":"my fav app",
+    "x":500,
+    "y":0,
+    "backgroundColor":"red"
+}

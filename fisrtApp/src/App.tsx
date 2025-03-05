@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React from "react";
 import MainWin from "./components/MainWin";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainWin />} path="/main" />
-    </Routes>
+    <MainWin/>
   );
 }
 

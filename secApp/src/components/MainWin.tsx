@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Viewer } from "resium";
 
 function MainWin() {
   const [mainColor, setMainColor] = useState<string>("yellow");
@@ -7,7 +6,6 @@ function MainWin() {
 
   return (
     <div style={{ height: "97vh", width: "97vw" , overflow:"hidden"}}>
-      <Viewer style={{height:"100%", width:"100%"}}/>
       <div style={{position:"absolute", top:0}}>
         <input
           value={mainColor}

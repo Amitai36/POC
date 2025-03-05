@@ -4,9 +4,7 @@ import MainWin from "./components/MainWin";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainWin />} path="/main" />
-    </Routes>
+    <MainWin/>
   );
 }
 
